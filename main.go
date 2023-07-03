@@ -45,6 +45,10 @@ func main() {
 	deleteRouter.HandleFunc("/api/products/{id:[a-zA-Z0-9_]+}", productHandler.DeleteProduct)
 
 	l.Println("Starting server at 8000 port")
-	log.Fatal(http.ListenAndServe(":8000", r))
+
+	if os.Getenv("PORT") == "" {
+		log.Fatal(http.ListenAndServe(":8000", r))
+	}
+	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), r))
 
 }
